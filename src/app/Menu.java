@@ -36,7 +36,8 @@ public class Menu {
         while (!menuChoice.contains("exit")) {
 
             System.out.print("Enter action (add, remove, edit, count, list, exit): ");
-            menuChoice = sc.nextLine();
+            menuChoice = sc.next();
+            sc.nextLine();
 
             switch (menuChoice) {
             case "add":
@@ -101,19 +102,28 @@ public class Menu {
 
     // EDIT
     public void edit() {
+
+        listToRemove();
+
+        System.out.print("Select a record: ");
+
+        int userNumber = sc.nextInt();
+
         if (list.isEmpty()) {
             System.out.println("No records to edit!");
 
-        } else if (condition) {
+        } else if (userNumber == n) {
+            editField();
 
         }
+        resetCount();
+        return;
     }
 
     // REMOVE
     public void remove() {
 
-        n = 0;
-        list();
+        listToRemove();
 
         System.out.print("Select a record: ");
 
@@ -121,15 +131,17 @@ public class Menu {
 
         if (list.isEmpty()) {
             System.out.println("No records to remove");
-
+            resetCount();
         }
 
         else if (userNumber == n) {
 
-            list.remove(n - 1);
+            list.remove(userNumber - userNumber);
+            System.out.println("The record removed");
             resetCount();
 
         }
+        resetCount();
         return;
     }
 
@@ -140,6 +152,7 @@ public class Menu {
             countN();
 
             System.out.println(n + ". " + x.toString());
+
         }
 
     }
@@ -156,4 +169,60 @@ public class Menu {
 
     }
 
+    public void listToRemove() {
+
+        for (Contacts x : list) {
+            countN();
+
+            System.out.println(n + ". " + x.toString());
+
+        }
+
+    }
+
+    public void editField() {
+        String user = "";
+        while (true) {
+
+            System.out.print("Select a field (name, surname, number): ");
+            user = sc.next();
+            sc.nextLine();
+
+            switch (user) {
+            case "name":
+
+                Contacts a = list.get(n - 1);
+                System.out.print("Enter name: ");
+                name = sc.nextLine();
+                a.setName(name);
+                System.out.println("The record updated!");
+                resetCount();
+                return;
+
+            case "surname":
+                Contacts b = list.get(n - 1);
+                System.out.print("Enter surname: ");
+                surname = sc.nextLine();
+                b.setSurname(surname);
+                System.out.println("The record updated!");
+                resetCount();
+
+                return;
+            case "number":
+                Contacts c = list.get(n - 1);
+                System.out.print("Enter number: ");
+                phoneNumber = sc.nextLine();
+                c.setPhoneNumber(phoneNumber);
+                System.out.println("The record updated!");
+                resetCount();
+
+                return;
+
+            default:
+                resetCount();
+                break;
+            }
+        }
+
+    }
 }

@@ -12,6 +12,7 @@ public class Menu {
     private String menuChoice;
     // n is the counter for counting in the Contacts list
     private int n;
+    private int userEditNumber;
 
     private String name;
     private String surname;
@@ -27,6 +28,7 @@ public class Menu {
         menuChoice = "";
         list = new ArrayList<Contacts>();
         n = 0;
+        userEditNumber = 0;
 
     }
 
@@ -103,16 +105,16 @@ public class Menu {
     // EDIT
     public void edit() {
 
-        listToRemove();
+        list();
 
         System.out.print("Select a record: ");
 
-        int userNumber = sc.nextInt();
+        userEditNumber = sc.nextInt();
 
         if (list.isEmpty()) {
             System.out.println("No records to edit!");
 
-        } else if (userNumber == n) {
+        } else {
             editField();
 
         }
@@ -123,7 +125,7 @@ public class Menu {
     // REMOVE
     public void remove() {
 
-        listToRemove();
+        list();
 
         System.out.print("Select a record: ");
 
@@ -134,9 +136,9 @@ public class Menu {
             resetCount();
         }
 
-        else if (userNumber == n) {
+        else {
 
-            list.remove(userNumber - userNumber);
+            list.remove(userNumber - 1);
             System.out.println("The record removed");
             resetCount();
 
@@ -154,11 +156,11 @@ public class Menu {
             System.out.println(n + ". " + x.toString());
 
         }
-
+        resetCount();
     }
 
     public int countN() {
-        n++;
+        n += 1;
 
         return n;
 
@@ -166,17 +168,6 @@ public class Menu {
 
     public void resetCount() {
         n = 0;
-
-    }
-
-    public void listToRemove() {
-
-        for (Contacts x : list) {
-            countN();
-
-            System.out.println(n + ". " + x.toString());
-
-        }
 
     }
 
@@ -191,7 +182,7 @@ public class Menu {
             switch (user) {
             case "name":
 
-                Contacts a = list.get(n - 1);
+                Contacts a = list.get(userEditNumber - 1);
                 System.out.print("Enter name: ");
                 name = sc.nextLine();
                 a.setName(name);
@@ -200,7 +191,7 @@ public class Menu {
                 return;
 
             case "surname":
-                Contacts b = list.get(n - 1);
+                Contacts b = list.get(userEditNumber - 1);
                 System.out.print("Enter surname: ");
                 surname = sc.nextLine();
                 b.setSurname(surname);
@@ -209,7 +200,7 @@ public class Menu {
 
                 return;
             case "number":
-                Contacts c = list.get(n - 1);
+                Contacts c = list.get(userEditNumber - 1);
                 System.out.print("Enter number: ");
                 phoneNumber = sc.nextLine();
                 c.setPhoneNumber(phoneNumber);
